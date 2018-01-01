@@ -20,3 +20,10 @@ def register():
 
     title = "One Minute Pitch Login"
     return render_template('auth/login.html',login_form = login_form,title = title)
+
+#logout
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
