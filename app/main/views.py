@@ -39,3 +39,42 @@ def new_pitch(id):
 
     title = 'New pitch'
     return render_template('new_pitches.html', title = title, pitch_form = form)
+
+# Dynamic routing for one pitch
+@main.route('/pitch/<int:id>', methods = ['GET','POST'])
+@login_required
+def single_pitch(id):
+    '''
+    Function the returns a single pitch for comment to be added
+    '''
+
+    pitches = Peptalk.query.get(id)
+
+    if pitches is None:
+        abort(404)
+
+    comment = Comments.get_comments(id)
+    title = 'Comment Section'
+    return render_template('pitch.html', title = title, pitches = pitches, comment = comment)
+
+# Dynamic routing for comment section
+@main.route('/pitch/new/<int:id>', methods = ['GET','POST'])
+@login_required
+def new_comment(id):
+    '''
+    Function that returns a list of comments for the particular pitch
+    '''
+    form = CommentForm()
+    pitches = Peptalk.query.filter_by(id=id).first()
+
+    if pitches is None:
+        abort(404)
+
+    if form.validate_on_submit():
+        comment_section_id = form.comment_section_id.data
+        new_comment = Comments(comment_section_id=comment_section_id,user_id=current_user.id,pitches_id=pitches.id)
+        new_comment.save_comment()
+        return redirect(url_for('.category', id = pitches.id))
+
+    title = 'New Comment'
+    return render_template('comments.html', title = title, comment_form = form)
