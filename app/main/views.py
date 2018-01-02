@@ -33,7 +33,7 @@ def new_pitch(id):
     if form.validate_on_submit():
         content = form.content.data
         # user = current_user._get_current_object()
-        new_pitch = Peptalk(content=content,user_id=current_user.id,category_id=category.id)
+        new_pitch = Talks(content=content,user_id=current_user.id,category_id=category.id)
         new_pitch.save_pitch()
         return redirect(url_for('.category', id = category.id))
 
@@ -48,7 +48,7 @@ def single_pitch(id):
     Function the returns a single pitch for comment to be added
     '''
 
-    pitches = Peptalk.query.get(id)
+    pitches = Talks.query.get(id)
 
     if pitches is None:
         abort(404)
@@ -65,7 +65,7 @@ def new_comment(id):
     Function that returns a list of comments for the particular pitch
     '''
     form = CommentForm()
-    pitches = Peptalk.query.filter_by(id=id).first()
+    pitches = Talks.query.filter_by(id=id).first()
 
     if pitches is None:
         abort(404)
