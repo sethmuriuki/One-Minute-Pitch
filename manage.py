@@ -1,11 +1,11 @@
 from app import create_app, db
 from flask_script import Manager, Server
-from app.models import Category,User,Peptalk,Comments
+from app.model import Category
 from  flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager
 
 # Creating app instances
-app = create_app('production')
+app = create_app('development')
 
 manager = Manager(app)
 manager.add_command('server',Server)

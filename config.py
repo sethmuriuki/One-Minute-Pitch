@@ -8,7 +8,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
 class ProdConfig(Config):
-     '''
+    '''
     Production  configuration child class
 
     Args:
@@ -16,6 +16,7 @@ class ProdConfig(Config):
     '''
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+   
 
 class DevConfig(Config):
     '''
