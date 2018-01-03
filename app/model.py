@@ -97,4 +97,18 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
+#comments
+class Comments(db.Model):
+     '''
+     class that creates new comments for users
+     '''
+     __tablename__ = 'comments'
+
+     #columns
+     id = db.Column(db.Integer,primary_key = True)
+     comment_section_id = db.Column(db.String(255))
+     date_posted = db.Column(db.DateTime,default=datetime.utcnow)
+     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+     pitches_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+
     
